@@ -764,6 +764,10 @@ ws.on("open", () => {
   send({ event: registerEvent, uuid: pluginUUID });
   console.log(`Plugin registered: ${pluginUUID}`);
   startMonitor();
+
+  // Re-resolve all devices after a delay to handle cases where PipeWire
+  // hasn't fully enumerated devices when the initial willAppear events fire
+  setTimeout(refreshAllTitles, 2000);
 });
 
 ws.on("message", (raw) => {
